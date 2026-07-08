@@ -6,7 +6,9 @@ services:
   unpush:
     image: ghcr.io/tonyo/unpush:latest
     volumes:
-      - /run/uncloud/uncloud.sock:/run/uncloud/uncloud.sock
+      # unpush needs access to the Uncloud socket (/run/uncloud/uncloud.sock);
+      # We are mounting the entire directory because of https://github.com/psviderski/uncloud/issues/404 
+      - /run/uncloud/:/run/uncloud/
       - /var/run/docker.sock:/var/run/docker.sock   # required for repo mode builds
     configs:
       - source: unpush_config
